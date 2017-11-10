@@ -11,7 +11,7 @@ class HppRequest
     :amount,
     :currency,
     :timestamp,
-    :sha1_hash,
+    :sha1hash,
     :auto_settle_flag,
     :comment1,
     :comment2,
@@ -41,7 +41,7 @@ class HppRequest
   attr_accessor *FIELDS
 
   def initialize(json = '{}')
-    JSON.parse(json).each { |key, value| instance_variable_set("@#{key}", value) }
+    JSON.parse(json).each { |key, value| instance_variable_set("@#{key.downcase}", value) }
   end
 
   def build_hash(secret)
@@ -101,9 +101,11 @@ class HppRequest
   end
 
   def to_json
-    instance_variables
-      .each_with_object({}) do |var, hash|
-        hash[var.to_s.delete('@')] = instance_variable_get(var)
-      end.to_json
+    (
+      instance_variables -
+      [:@hpp_fraud_filter_mode, :@hash, :@hpp_select_stored_card, :@payer_reference]
+    ).each_with_object({}) do |var, hash|
+      hash[var.to_s.delete('@')] = instance_variable_get(var)
+    end.to_json
   end
 end
