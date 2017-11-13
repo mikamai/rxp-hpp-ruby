@@ -73,9 +73,9 @@ module Request
   end
 
   def valid_request_with_card_storage
-    result = valid_request
-    result['CARD_STORAGE_ENABLE'] = '1'
-    result['OFFER_SAVE_CARD'] = '1'
-    result
+    valid_request.tap do |request|
+      request['CARD_STORAGE_ENABLE'] = '1'
+      request['OFFER_SAVE_CARD'] = '1'
+    end
   end
 end

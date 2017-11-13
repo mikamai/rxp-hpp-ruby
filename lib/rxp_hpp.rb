@@ -10,43 +10,28 @@ class RealexHpp
   end
 
   def request_to_json(hpp_request)
-    hpp_request.generate_defaults @secret
-
-    begin
-      hpp_request.encode
-    rescue Exception => ex
-      raise Exception.new('Exception encoding HPP request.')
-    end
-
-    hpp_request.to_json
+    hpp_request
+      .build_hash(@secret)
+      .encode
+      .to_json
   end
 
   def request_from_json(json, encoded = true)
     hpp_request = HppRequest.new json
-    if encoded
-      begin
-        hpp_request.decode
-      rescue Exception => ex
-        raise Exception.new('Exception decoding HPP request.')
-      end
-    end
-
+    hpp_request.decode if encoded
     hpp_request
   end
 
   def response_to_json(hpp_response)
-    hpp_response.build_hash @secret
-    hpp_response.encode
-
-    hpp_response.to_json
+    hpp_response
+      .build_hash(@secret)
+      .encode
+      .to_json
   end
 
   def response_from_json(json, encoded = true)
     hpp_response = HppResponse.new json
-
-    if encoded
-      hpp_response.decode
-    end
+    hpp_response.decode if encoded
     hpp_response
   end
 end

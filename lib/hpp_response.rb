@@ -36,16 +36,16 @@ class HppResponse < HppEncodable
 
   def generate_hash(secret)
 
-    hash_result = [
-      @timestamp,
-      @merchant_id,
-      @order_id,
-      @result,
-      @message,
-      @pasref,
-      @authcode
-    ].join(',')
+    hash_seed = [
+      @timestamp   || '',
+      @merchant_id || '',
+      @order_id    || '',
+      @result      || '',
+      @message     || '',
+      @pasref      || '',
+      @authcode    || ''
+    ].join '.'
 
-    encode_hash hash_result, secret
+    encode_hash hash_seed, secret
   end
 end
