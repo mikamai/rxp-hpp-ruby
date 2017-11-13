@@ -50,12 +50,12 @@ describe HppRequest do
       before { request1.hpp_fraud_filter_mode = 'FRAUD_FILTER_MODE_ACTIVE' }
 
       it 'produce a different hash' do
-        expect(request1.build_hash('mysecret').hash).to eq "2d444b908323033af25752a1d5eb91e0ba724374"
+        expect(request1.build_hash('mysecret').hash).to eq "236cb296d1ad94a4547602a070993c05f812c58f"
       end
     end
 
     it 'produce always the same hash' do
-      expect(request1.build_hash('mysecret').hash).to eq "8e56469e62505a25731d809b1eef6c564aea7ec4"
+      expect(request1.build_hash('mysecret').hash).to eq "aafab12dd4f92e0d6e13dd8c3fce93232aedf28a"
     end
   end
 end

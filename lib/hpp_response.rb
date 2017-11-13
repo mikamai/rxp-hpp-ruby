@@ -1,7 +1,9 @@
-require 'generation_utils'
+require 'utils/generator'
 require 'hpp_encodable'
 
 class HppResponse < HppEncodable
+  include Generator
+
   FIELDS = [
     :merchant_id,
     :account,
@@ -44,11 +46,6 @@ class HppResponse < HppEncodable
       @authcode
     ].join(',')
 
-    GenerationUtils.generate_hash hash_result, secret
-  end
-
-  def hash_valid?(secret)
-    generated_hash = generate_hash secret
-    generated_hash == @hash
+    encode_hash hash_result, secret
   end
 end

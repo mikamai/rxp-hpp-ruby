@@ -1,7 +1,9 @@
-require 'generation_utils'
+require 'utils/generator'
 require 'hpp_encodable'
 
 class HppRequest < HppEncodable
+  include Generator
+
   require 'base64'
   require 'json'
 
@@ -69,18 +71,18 @@ class HppRequest < HppEncodable
       end
     end
 
-    @hash = GenerationUtils.generate_hash result_hash, secret
+    @hash = encode_hash result_hash, secret
     self
   end
 
   def generate_defaults(secret)
 
     if @timestamp.nil? || '' == @timestamp
-      @timestamp = GenerationUtils.generate_timestamp
+      @timestamp = generate_timestamp
     end
 
     if @order_id.nil? || '' == @order_id
-      @order_id = GenerationUtils.generate_order_id
+      @order_id = generate_order_id
     end
 
     build_hash secret
