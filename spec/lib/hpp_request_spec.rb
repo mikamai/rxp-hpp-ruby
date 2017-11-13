@@ -16,10 +16,10 @@ describe HppRequest do
   end
 
   describe '#hash' do
-    let(:request1) { sample_valid }
+    let(:request1) { valid_hpp_request }
 
     context 'with hpp_select_stored_card' do
-      let(:request2) { sample_valid }
+      let(:request2) { valid_hpp_request }
 
       before do
         request1.payer_reference = 'PAYER_REFERENCE'
@@ -33,7 +33,7 @@ describe HppRequest do
     end
 
     context 'without hpp_select_stored_card' do
-      let(:request2) { sample_valid }
+      let(:request2) { valid_hpp_request }
 
       before do
         request1.payer_reference = 'PAYER_REFERENCE'

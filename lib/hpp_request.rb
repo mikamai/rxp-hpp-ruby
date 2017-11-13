@@ -1,6 +1,7 @@
 require 'generation_utils'
+require 'hpp_encodable'
 
-class HppRequest
+class HppRequest < HppEncodable
   require 'base64'
   require 'json'
 
@@ -38,11 +39,13 @@ class HppRequest
     :hpp_select_stored_card
   ]
 
-  attr_accessor *FIELDS
+  JSON_IGNORE = JSON_IGNORE.concat [
+    :@hpp_fraud_filter_mode,
+    :@hpp_select_stored_card,
+    :@payer_reference
+  ]
 
-  def initialize(json = '{}')
-    JSON.parse(json).each { |key, value| instance_variable_set("@#{key.downcase}", value) }
-  end
+  attr_accessor *FIELDS
 
   def build_hash(secret)
     result_hash = ""
@@ -66,7 +69,7 @@ class HppRequest
       end
     end
 
-    @hash = GenerationUtils.generate_hash(result_hash, secret)
+    @hash = GenerationUtils.generate_hash result_hash, secret
     self
   end
 
@@ -81,31 +84,5 @@ class HppRequest
     end
 
     build_hash secret
-  end
-
-  def apply_to_all
-    FIELDS.each do |field|
-      value = send(field).to_s
-      instance_variable_set "@#{field}", yield(value)
-    end
-  end
-
-  def encode
-    apply_to_all { |field| Base64.encode64(field).force_encoding('UTF-8') }
-    self
-  end
-
-  def decode
-    apply_to_all { |field| Base64.decode64(field).force_encoding('UTF-8') }
-    self
-  end
-
-  def to_json
-    (
-      instance_variables -
-      [:@hpp_fraud_filter_mode, :@hash, :@hpp_select_stored_card, :@payer_reference]
-    ).each_with_object({}) do |var, hash|
-      hash[var.to_s.delete('@')] = instance_variable_get(var)
-    end.to_json
   end
 end

@@ -1,5 +1,33 @@
-class HppResponse
-  def hash(secret)
+require 'generation_utils'
+require 'hpp_encodable'
+
+class HppResponse < HppEncodable
+  FIELDS = [
+    :merchant_id,
+    :account,
+    :order_id,
+    :amount,
+    :authcode,
+    :timestamp,
+    :sha1hash,
+    :result,
+    :message,
+    :cvnresult,
+    :pasref,
+    :batchid,
+    :eci,
+    :cavv,
+    :xid,
+    :comment1,
+    :comment2,
+    :tss
+  ]
+
+  MAP_FIELDS = [:tss]
+
+  attr_accessor *FIELDS
+
+  def build_hash(secret)
     @hash = generate_hash secret
     self
   end
@@ -7,48 +35,16 @@ class HppResponse
   def generate_hash(secret)
 
     hash_result = [
-      @timeStamp,
-      @merchantId,
-      @orderId,
+      @timestamp,
+      @merchant_id,
+      @order_id,
       @result,
       @message,
-      @pasRef,
-      @authCode
+      @pasref,
+      @authcode
     ].join(',')
 
-    GenerationUtils.generateHash hash_result, secret
-  end
-
-  def apply_to_all(func)
-    [
-      @merchant_id,
-      @account,
-      @amount,
-      @auth_code,
-      @batch_id,
-      @cavv,
-      @cvn_result,
-      @eci,
-      @comment_one,
-      @comment_two,
-      @message,
-      @pas_ref,
-      @hash,
-      @result,
-      @xid,
-      @order_id,
-      @time_stamp
-    ].each(func)
-  end
-
-  def encode
-    apply_to_all(-> (field) { field = Base64.encode field })
-    self
-  end
-
-  def decode(charset)
-    apply_to_all(-> (field) { field = Base64.decode field })
-    self
+    GenerationUtils.generate_hash hash_result, secret
   end
 
   def hash_valid?(secret)

@@ -35,13 +35,8 @@ class RealexHpp
   end
 
   def response_to_json(hpp_response)
-    hpp_response.build_hash(secret)
-
-    begin
-      hpp_response = hpp_response.encode
-    rescue Exception => ex
-      raise Exception.new('Exception encoding HPP response.')
-    end
+    hpp_response.build_hash @secret
+    hpp_response.encode
 
     hpp_response.to_json
   end
@@ -50,13 +45,8 @@ class RealexHpp
     hpp_response = HppResponse.new json
 
     if encoded
-      begin
-        hpp_response = hpp_response.decode
-      rescue Exception => ex
-        Exception.new('Exception decoding HPP response.')
-      end
+      hpp_response.decode
     end
-
     hpp_response
   end
 end

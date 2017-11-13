@@ -1,8 +1,10 @@
 require 'bundler/setup'
 require 'rxp_hpp'
 require 'hpp_request'
+require 'hpp_response'
 require 'support/request'
-
+require 'support/response'
+require 'pry'
 
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -11,6 +13,7 @@ RSpec.configure do |config|
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
   config.include Request
+  config.include Response
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
     # and `failure_message` of custom matchers include text for helper methods

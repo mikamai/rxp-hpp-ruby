@@ -1,37 +1,14 @@
 module Request
-  def sample_valid
+  def valid_hpp_request(with_card_storage = false)
     request = HppRequest.new
-    request.merchant_id = "MerchantID"
-    request.account = "myAccount"
-    request.order_id = "OrderID"
-    request.amount = "100"
-    request.currency = "EUR"
-    request.timestamp = "20990101120000"
-    request.sha1hash = "5d8f05abd618e50db4861a61cc940112786474cf"
-    request.auto_settle_flag = "1"
-    request.comment1 = "a-z A-Z 0-9 ' \", + “” ._ - & \\ / @ ! ? % ( )* : £ $ & € # [ ] | = ;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷ø¤ùúûüýþÿŒŽšœžŸ¥"
-    request.comment2 = "Comment Two"
-    request.return_tss = "0"
-    request.shipping_code = "56|987"
-    request.shipping_co = "IRELAND"
-    request.billing_code = "123|56"
-    request.billing_co = "IRELAND"
-    request.cust_num = "123456"
-    request.var_ref = "VariableRef"
-    request.prod_id = "ProductID"
-    request.hpp_lang = "EN"
-    request.card_payment_button = "Submit Payment"
-    request.card_storage_enable = "0"
-    request.offer_save_card = "0"
-    request.payer_ref = "PayerRef"
-    request.pmt_ref = "PaymentRef"
-    request.payer_exist = "0"
-    request.validate_card_only = "0"
-    request.dcc_enable = "0"
+    seed = with_card_storage ? valid_request_with_card_storage : valid_request
+    seed.each do |key, value|
+      request.send "#{key.downcase}=", value
+    end
     request
   end
 
-  def encoded_json
+  def encoded_request
     {
       "MERCHANT_ID" => "TWVyY2hhbnRJRA==",
       "ACCOUNT" => "bXlBY2NvdW50",
@@ -60,6 +37,45 @@ module Request
       "PAYER_EXIST" => "MA==",
       "VALIDATE_CARD_ONLY" => "MA==",
       "DCC_ENABLE" => "MA=="
-    }.to_json
+    }
+  end
+
+  def valid_request
+    {
+      "MERCHANT_ID" => "MerchantID",
+      "ACCOUNT" => "myAccount",
+      "ORDER_ID" => "OrderID",
+      "AMOUNT" => "100",
+      "CURRENCY" => "EUR",
+      "TIMESTAMP" => "20990101120000",
+      "SHA1HASH" => "5d8f05abd618e50db4861a61cc940112786474cf",
+      "AUTO_SETTLE_FLAG" => "1",
+      "COMMENT1" => "a-z A-Z 0-9 ' \", + “” ._ - & \\ / @ ! ? % ( )* : £ $ & € # [ ] | = ;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷ø¤ùúûüýþÿŒŽšœžŸ¥",
+      "COMMENT2" => "Comment Two",
+      "RETURN_TSS" => "0",
+      "SHIPPING_CODE" => "56|987",
+      "SHIPPING_CO" => "IRELAND",
+      "BILLING_CODE" => "123|56",
+      "BILLING_CO" => "IRELAND",
+      "CUST_NUM" => "123456",
+      "VAR_REF" => "VariableRef",
+      "PROD_ID" => "ProductID",
+      "HPP_LANG" => "EN",
+      "CARD_PAYMENT_BUTTON" => "Submit Payment",
+      "CARD_STORAGE_ENABLE" => "0",
+      "OFFER_SAVE_CARD" => "0",
+      "PAYER_REF" => "PayerRef",
+      "PMT_REF" => "PaymentRef",
+      "PAYER_EXIST" => "0",
+      "VALIDATE_CARD_ONLY" => "0",
+      "DCC_ENABLE" => "0"
+    }
+  end
+
+  def valid_request_with_card_storage
+    result = valid_request
+    result['CARD_STORAGE_ENABLE'] = '1'
+    result['OFFER_SAVE_CARD'] = '1'
+    result
   end
 end
