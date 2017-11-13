@@ -35,7 +35,6 @@ class HppRequest < HppEncodable
     :payer_exist,
     :validate_card_only,
     :dcc_enable,
-    :payer_reference,
     :hpp_fraud_filter_mode,
     :hash,
     :hpp_select_stored_card
@@ -44,7 +43,7 @@ class HppRequest < HppEncodable
   JSON_IGNORE = JSON_IGNORE.concat [
     :@hpp_fraud_filter_mode,
     :@hpp_select_stored_card,
-    :@payer_reference
+    :@payer_ref
   ]
 
   attr_accessor *FIELDS
@@ -53,14 +52,13 @@ class HppRequest < HppEncodable
     result_hash = ""
 
     if @hpp_select_stored_card != nil && "" != @hpp_select_stored_card
-      @payer_reference = @hpp_select_stored_card
+      @payer_ref = @hpp_select_stored_card
     end
-
     if @card_storage_enable == "1" || (@hpp_select_stored_card != nil && !@hpp_select_stored_card.empty?)
-      result_hash = "#{result_hash}#{[@timestamp, ".", @merchant_id, ".", @order_id , @amount, @currency, @payerReference, @paymentReference].compact.join('.')}"
+      result_hash = "#{result_hash}#{[@timestamp, @merchant_id, @order_id , @amount, @currency, @payer_ref, @pmt_ref].compact.join('.')}"
 
       if @hpp_fraud_filter_mode && @hpp_fraud_filter_mode != ''
-        result_hash + "#{result_hash}.#{@hpp_fraud_filter_mode}"
+        result_hash = "#{result_hash}.#{@hpp_fraud_filter_mode}"
       end
 
     else
