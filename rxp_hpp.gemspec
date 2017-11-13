@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'rxp_hpp'
-  s.version     = '0.0.0'
+  s.version     = '0.0.1'
   s.date        = '2017-11-10'
-  s.summary     = 'Hola!'
-  s.description = 'A simple hello world gem'
+  s.summary     = 'Ruby SDK for Realex HPP'
+  s.description = 'As simple Ruby SDK for Realex HPP'
   s.authors     = ['Alberto Pellizzon']
   s.email       = 'alberto@mikami.cpm'
   s.files       =  Dir['lib/*.rb'] + Dir['spec/**/*']
