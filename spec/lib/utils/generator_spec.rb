@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Generator do
@@ -5,10 +7,10 @@ describe Generator do
 
   describe '.encode_hash' do
     let(:test)     { '20120926112654.thestore.ORD453-11.00.Successful.3737468273643.79347' }
-		let(:secret)   { 'mysecret' }
-	  let(:expected) { '368df010076481d47a21e777871012b62b976339' }
+    let(:secret) { 'mysecret' }
+    let(:expected) { '368df010076481d47a21e777871012b62b976339' }
 
-		it { expect(subject.encode_hash test, secret).to eq expected }
+    it { expect(subject.encode_hash(test, secret)).to eq expected }
   end
 
   describe '.generate_timestamp' do

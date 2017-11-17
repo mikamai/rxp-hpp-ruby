@@ -1,10 +1,12 @@
-# RealexHpp class for converting HPP requests and responses to and from JSON.
-# This class is also responsible for validating inputs, generating defaults and encoding parameter values.
+# frozen_string_literal: true
+
 require 'hpp_request'
 require 'hpp_response'
 
+# RealexHpp class for converting HPP requests and responses to and from JSON.
+# This class is also responsible for validating inputs, generating defaults
+# and encoding parameter values.
 class RealexHpp
-
   def initialize(secret)
     @secret = secret
   end

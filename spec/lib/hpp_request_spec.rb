@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe HppRequest do
@@ -46,11 +48,10 @@ describe HppRequest do
     end
 
     context 'without hpp_select_stored_card' do
-
       let(:request2) { valid_hpp_request }
 
       before do
-        subject.payer_ref   = 'newpayer1'
+        subject.payer_ref = 'newpayer1'
         request2.hpp_select_stored_card = ''
       end
 
