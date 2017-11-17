@@ -22,7 +22,7 @@ class HppEncodable
       instance_variable_set(
         "@#{field}",
         if self.class::MAP_FIELDS.include? :"#{field}"
-          send(field).map { |key, value| [key, yield(value)] }.to_h
+          (send(field) || {}).map { |key, value| [key, yield(value)] }.to_h
         else
           yield send(field).to_s
         end
