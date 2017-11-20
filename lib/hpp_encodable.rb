@@ -3,7 +3,7 @@
 # HppEncodable allows to encode / decode Hpp request and response
 class HppEncodable
   FIELDS = [].freeze
-  JSON_IGNORE = [:@hash].freeze
+  JSON_IGNORE = [].freeze
   MAP_FIELDS = [].freeze
 
   def initialize(json = '{}')

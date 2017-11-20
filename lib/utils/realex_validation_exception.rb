@@ -1,0 +1,2 @@
+class RealexValidationException < Exception
+end

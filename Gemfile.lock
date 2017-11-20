@@ -33,6 +33,3 @@ DEPENDENCIES
   pry
   rspec (~> 3)
   rxp_hpp!
-
-BUNDLED WITH
-   1.16.0

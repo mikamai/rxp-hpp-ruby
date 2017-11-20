@@ -7,7 +7,7 @@ require 'hpp_encodable'
 class HppResponse < HppEncodable
   include Generator
 
-  FIELDS = %i[
+  FIELDS = %i(
     merchant_id
     account
     order_id
@@ -26,14 +26,14 @@ class HppResponse < HppEncodable
     comment1
     comment2
     tss
-  ].freeze
+  ).freeze
 
   MAP_FIELDS = [:tss].freeze
 
   attr_accessor(*FIELDS)
 
   def build_hash(secret)
-    @hash = generate_hash secret
+    @sha1hash = generate_hash secret
     self
   end
 
@@ -49,5 +49,9 @@ class HppResponse < HppEncodable
     ].map { |value| value_or_empty value }.join '.'
 
     encode_hash hash_seed, secret
+  end
+
+  def valid_hash?(secret)
+    generate_hash(secret) == @sha1hash
   end
 end

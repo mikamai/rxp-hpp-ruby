@@ -10,7 +10,7 @@ require 'json'
 class HppRequest < HppEncodable
   include Generator
 
-  FIELDS = %i[
+  FIELDS = %i(
     merchant_id
     account
     order_id
@@ -39,15 +39,14 @@ class HppRequest < HppEncodable
     validate_card_only
     dcc_enable
     hpp_fraud_filter_mode
-    hash
     hpp_select_stored_card
-  ].freeze
+  ).freeze
 
-  JSON_IGNORE = JSON_IGNORE + %i[
+  JSON_IGNORE = JSON_IGNORE + %i(
     @hpp_fraud_filter_mode
     @hpp_select_stored_card
     @payer_ref
-  ]
+  )
 
   attr_accessor(*FIELDS)
 
@@ -62,7 +61,7 @@ class HppRequest < HppEncodable
     hash_seed = add_payer_ref_and_pmt_ref hash_seed
     hash_seed = add_fraud_filter_mode hash_seed
 
-    @hash = encode_hash hash_seed, secret
+    @sha1hash = encode_hash hash_seed, secret
     self
   end
 

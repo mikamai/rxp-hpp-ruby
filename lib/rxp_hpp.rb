@@ -2,11 +2,14 @@
 
 require 'hpp_request'
 require 'hpp_response'
+require 'utils/validator'
 
 # RealexHpp class for converting HPP requests and responses to and from JSON.
 # This class is also responsible for validating inputs, generating defaults
 # and encoding parameter values.
 class RealexHpp
+  include Validator
+
   def initialize(secret)
     @secret = secret
   end
@@ -34,6 +37,8 @@ class RealexHpp
   def response_from_json(json, encoded = true)
     hpp_response = HppResponse.new json
     hpp_response.decode if encoded
+
+    validate_response hpp_response, @secret
     hpp_response
   end
 end

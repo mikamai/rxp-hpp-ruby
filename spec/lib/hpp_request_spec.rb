@@ -25,7 +25,7 @@ describe HppRequest do
       end
 
       it 'overrides payer_ref' do
-        expect(subject.build_hash('mysecret').hash).to_not eq request2.build_hash('mysecret').hash
+        expect(subject.build_hash('mysecret').sha1hash).to_not eq request2.build_hash('mysecret').sha1hash
       end
     end
 
@@ -43,7 +43,7 @@ describe HppRequest do
       end
 
       it 'generates the correct hash' do
-        expect(subject.build_hash('mysecret').hash).to eq '4106afc4666c6145b623089b1ad4098846badba2'
+        expect(subject.build_hash('mysecret').sha1hash).to eq '4106afc4666c6145b623089b1ad4098846badba2'
       end
     end
 
@@ -56,7 +56,7 @@ describe HppRequest do
       end
 
       it 'overrides payer_reference' do
-        expect(subject.build_hash('mysecret').hash).to eq request2.build_hash('mysecret').hash
+        expect(subject.build_hash('mysecret').sha1hash).to eq request2.build_hash('mysecret').sha1hash
       end
     end
 
@@ -71,7 +71,7 @@ describe HppRequest do
       end
 
       it 'produce a different hash' do
-        expect(subject.build_hash('mysecret').hash).to eq 'b7b3cbb60129a1c169a066afa09ce7cc843ff1c1'
+        expect(subject.build_hash('mysecret').sha1hash).to eq 'b7b3cbb60129a1c169a066afa09ce7cc843ff1c1'
       end
     end
 
@@ -85,7 +85,7 @@ describe HppRequest do
       end
 
       it 'produce always the same hash' do
-        expect(subject.build_hash('mysecret').hash).to eq 'cc72c08e529b3bc153481eda9533b815cef29de3'
+        expect(subject.build_hash('mysecret').sha1hash).to eq 'cc72c08e529b3bc153481eda9533b815cef29de3'
       end
     end
   end
