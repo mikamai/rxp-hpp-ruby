@@ -43,9 +43,9 @@ class HppRequest < HppEncodable
   ].freeze
 
   JSON_IGNORE = JSON_IGNORE + %i[
-    @hpp_fraud_filter_mode
-    @hpp_select_stored_card
-    @payer_ref
+    hpp_fraud_filter_mode
+    hpp_select_stored_card
+    payer_ref
   ]
 
   attr_accessor(*FIELDS)

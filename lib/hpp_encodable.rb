@@ -41,9 +41,9 @@ class HppEncodable
   end
 
   def to_json
-    json_keys = instance_variables - self.class::JSON_IGNORE
-    json_keys.each_with_object({}) do |var, hash|
-      hash[var.to_s.delete('@')] = instance_variable_get var
+    json_keys = self.class::FIELDS - self.class::JSON_IGNORE
+    json_keys.each_with_object({}) do |field, hash|
+      hash["#{field}".upcase] = send field
     end.to_json
   end
 
