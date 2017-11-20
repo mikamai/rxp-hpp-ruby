@@ -8,11 +8,8 @@ class HppEncodable
 
   def initialize(json = '{}')
     JSON.parse(json).each do |key, value|
-      instance_key = "@#{key.downcase}"
-      if self.class::MAP_FIELDS.include? :"#{key.downcase}"
-        instance_variable_set instance_key, value
-      elsif self.class::FIELDS.include? :"#{key.downcase}"
-        instance_variable_set instance_key, value
+      if self.class::FIELDS.include? :"#{key.downcase}"
+        instance_variable_set "@#{key.downcase}", value
       end
     end
   end
