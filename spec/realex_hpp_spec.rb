@@ -67,7 +67,7 @@ describe RealexHpp do
       context 'when the response is altered' do
         let(:json) { encoded.to_json }
 
-        %w(
+        %w[
           SHA1HASH
           MERCHANT_ID
           TIMESTAMP
@@ -76,7 +76,7 @@ describe RealexHpp do
           MESSAGE
           PASREF
           AUTHCODE
-        ).each do |field|
+        ].each do |field|
           context "when #{field} is beign altered" do
             before { encoded['MERCHANT_ID'] = 'altered!' }
             it 'raise an exception' do

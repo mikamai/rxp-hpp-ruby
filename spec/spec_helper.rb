@@ -8,7 +8,6 @@ require 'utils/generator'
 require 'utils/realex_validation_exception'
 require 'support/request'
 require 'support/response'
-require 'pry'
 
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration

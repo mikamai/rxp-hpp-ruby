@@ -7,7 +7,7 @@ require 'hpp_encodable'
 class HppResponse < HppEncodable
   include Generator
 
-  FIELDS = %i(
+  FIELDS = %i[
     merchant_id
     account
     order_id
@@ -26,7 +26,7 @@ class HppResponse < HppEncodable
     comment1
     comment2
     tss
-  ).freeze
+  ].freeze
 
   MAP_FIELDS = [:tss].freeze
 
