@@ -31,7 +31,7 @@ class HppEncodable
   end
 
   def encode
-    apply_all { |value| Base64.encode64(value).force_encoding 'UTF-8' }
+    apply_all { |value| Base64.strict_encode64(value).force_encoding 'UTF-8' }
     self
   end
 

@@ -10,7 +10,7 @@ describe HppRequest do
     it { expect { subject.encode }.to change(subject, :amount) }
   end
 
-  describe '#encode' do
+  describe '#decode' do
     it { expect { subject.decode }.to change(subject, :amount) }
   end
 
