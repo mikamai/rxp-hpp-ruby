@@ -14,7 +14,7 @@ describe Generator do
   end
 
   describe '.generate_timestamp' do
-    it { expect(subject.generate_timestamp).to match /[0-9]{13}/ }
+    it { expect(subject.generate_timestamp).to match /[0-9]{14}/ }
   end
 
   describe '.generate_order_id' do

@@ -11,10 +11,10 @@ module Generator
   end
 
   def generate_timestamp
-    DateTime.now.strftime '%Q'
+    DateTime.now.strftime '%Y%m%d%H%M%S'
   end
 
   def generate_order_id
-    Base64.encode64 SecureRandom.uuid
+    Base64.urlsafe_encode64 SecureRandom.uuid
   end
 end
